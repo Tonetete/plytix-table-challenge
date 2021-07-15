@@ -1,0 +1,27 @@
+<div>
+  <div class="row gy-2">
+    <div class="col-md-2">
+      <div class="switch-button">
+        <fa-icon class="switch-button-columns" [icon]="faColumns"></fa-icon>
+        <input
+          (click)="toggleView()"
+          class="switch-button-checkbox"
+          type="checkbox"
+        />
+        <label class="switch-button-label" for=""
+          ><span class="switch-button-label-span"
+            ><fa-icon [icon]="faTable"></fa-icon></span
+        ></label>
+      </div>
+    </div>
+    <div class="col-md-10 text-right">
+      <app-add-row></app-add-row>
+    </div>
+  </div>
+  <div class="row gy-2">
+    <div class="col-md-12">
+      <app-users *ngIf="showTable"></app-users>
+      <app-departments *ngIf="!showTable"></app-departments>
+    </div>
+  </div>
+</div>
