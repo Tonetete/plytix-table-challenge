@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
+  "homepage": "https://tonetete.github.io/plytix-table-challenge/",
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.0.3",
