@@ -1,0 +1,104 @@
+<app-spinner *ngIf="!users.length"></app-spinner>
+
+<div [@loading]="!users.length" *ngIf="users.length" class="row">
+  <div id="marketing" class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Marketing</h5>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search user..."
+          (keyup)="searchUsers(inputMarketingSearch.value, 'Marketing')"
+          #inputMarketingSearch
+        />
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div
+            *ngFor="
+              let user of users
+                | department: 'Marketing'
+                | filterByNameEmail: searchMarketingKeyWord
+            "
+            class="col"
+          >
+            <div class="card h-100">
+              <div class="card-body">
+                <fa-icon
+                  class="fa-card-user"
+                  [icon]="faUser"
+                  size="6x"
+                ></fa-icon>
+                <p>
+                  <span
+                    [ngClass]="{
+                      'bg-experienced': user.expertise === 'Experienced',
+                      'bg-advanced': user.expertise === 'Advanced',
+                      'bg-senior': user.expertise === 'Senior',
+                      'bg-expert': user.expertise === 'Expert'
+                    }"
+                    class="badge rounded-pill"
+                    >{{ user.expertise }}</span
+                  >
+                </p>
+                <h5 class="card-title">{{ user.name }}</h5>
+                <p class="card-text">
+                  {{ user.email }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="development" class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Development</h5>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search user..."
+          (keyup)="searchUsers(inputDevelopmentSearch.value, 'Development')"
+          #inputDevelopmentSearch
+        />
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div
+            *ngFor="
+              let user of users
+                | department: 'Development'
+                | filterByNameEmail: searchDevelopmentKeyWord
+            "
+            class="col"
+          >
+            <div class="card h-100">
+              <div class="card-body">
+                <fa-icon
+                  class="fa-card-user"
+                  [icon]="faUser"
+                  size="6x"
+                ></fa-icon>
+                <p>
+                  <span
+                    [ngClass]="{
+                      'bg-experienced': user.expertise === 'Experienced',
+                      'bg-advanced': user.expertise === 'Advanced',
+                      'bg-senior': user.expertise === 'Senior',
+                      'bg-expert': user.expertise === 'Expert'
+                    }"
+                    class="badge rounded-pill"
+                    >{{ user.expertise }}</span
+                  >
+                </p>
+                <h5 class="card-title">{{ user.name }}</h5>
+                <p class="card-text">
+                  {{ user.email }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
