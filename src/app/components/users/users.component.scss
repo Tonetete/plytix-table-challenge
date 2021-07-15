@@ -1,0 +1,21 @@
+a.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.align-actions {
+  vertical-align: inherit;
+}
+
+.space-td {
+  padding: 0.5em;
+}
+
+.w20 {
+  width: 20%;
+}
+
+.w30 {
+  width: 30%;
+}

@@ -1,0 +1,163 @@
+<!-- ROWS TABLE -->
+
+<app-spinner *ngIf="!users.length"></app-spinner>
+
+<div
+  [@loading]="!users.length"
+  *ngIf="users.length"
+  class="row animated fadeIn fast"
+>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th class="w100">Department</th>
+                <th class="text-nowrap w100">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="height: 65px" *ngFor="let user of users; index as i">
+                <td class="w20 align-middle">
+                  <input
+                    *ngIf="rowIndexEdit === i; else showName"
+                    type="text"
+                    class="form-control"
+                    [class.is-invalid]="!user.name"
+                    [(ngModel)]="user.name"
+                  />
+                  <ng-template #showName>{{ user.name }}</ng-template>
+                </td>
+                <td class="w30 align-middle">
+                  <input
+                    *ngIf="rowIndexEdit === i; else showEmail"
+                    type="text"
+                    class="form-control"
+                    [class.is-invalid]="!validateEmail(user.email)"
+                    [(ngModel)]="user.email"
+                  />
+                  <ng-template #showEmail>{{ user.email }}</ng-template>
+                </td>
+                <td class="w30 align-middle">
+                  <select
+                    *ngIf="rowIndexEdit === i; else showDepartment"
+                    [(ngModel)]="user.department"
+                    [class.is-invalid]="!user.department"
+                    class="form-control"
+                  >
+                    <option value="Marketing">Marketing</option>
+                    User
+                    <option value="Development">Development</option>
+                  </select>
+                  <ng-template #showDepartment>{{
+                    user.department
+                  }}</ng-template>
+                </td>
+                <td class="align-actions text-nowrap text-center">
+                  <a
+                    *ngIf="rowIndexEdit === i; else showEditAction"
+                    (click)="editUser(user, i)"
+                    [class.disabled]="
+                      !user.name ||
+                      !validateEmail(user.email) ||
+                      !user.department
+                    "
+                    class="cursor space-td"
+                    data-toggle="tooltip"
+                    data-original-title="Edit User"
+                  >
+                    <fa-icon
+                      [classes]="['text-success']"
+                      [icon]="faCheck"
+                    ></fa-icon>
+                  </a>
+                  <ng-template #showEditAction>
+                    <a
+                      (click)="setEditRow(i)"
+                      class="cursor space-td"
+                      data-toggle="tooltip"
+                      data-original-title="Edit Action"
+                    >
+                      <fa-icon
+                        [classes]="['text-success']"
+                        [icon]="faPencilAlt"
+                      ></fa-icon>
+                    </a>
+                  </ng-template>
+                  <a
+                    *ngIf="rowIndexEdit === i; else showDeleteAction"
+                    (click)="cancelEditRow()"
+                    class="cursor space-td"
+                    data-toggle="tooltip"
+                    data-original-title="Delete"
+                  >
+                    <fa-icon
+                      [classes]="['text-danger']"
+                      [icon]="faCancel"
+                    ></fa-icon>
+                  </a>
+
+                  <ng-template #showDeleteAction>
+                    <a
+                      (click)="showRemoveUserModal(user)"
+                      class="cursor space-td"
+                      data-toggle="tooltip"
+                      data-original-title="Delete"
+                    >
+                      <fa-icon
+                        [classes]="['text-danger']"
+                        [icon]="faTrashAlt"
+                      ></fa-icon>
+                    </a>
+                  </ng-template>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE ROW MODAL -->
+
+<app-modal #removeRowModal [modalId]="'removerow'" [title]="'Remove row'">
+  <form modal-body>
+    <div *ngFor="let field of removeRowFieldsDisplay">
+      <div class="form-group">
+        <label for="{{ field.label }}" class="col-form-label"
+          >{{ field.label | titlecase }}:</label
+        >
+
+        <input
+          *ngIf="field.type === 'text'"
+          disabled="true"
+          type="text"
+          class="form-control"
+          [value]="field.value"
+        />
+        <select
+          *ngIf="field.type === 'select'"
+          disabled="true"
+          type="text"
+          class="form-control"
+          [value]="field.selectedValue"
+        >
+          <option *ngFor="let value of field.value | as" [value]="value">
+            {{ value | titlecase }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </form>
+  <div modal-footer>
+    <button (click)="deleteUser()" footer type="button" class="btn btn-danger">
+      Delete
+    </button>
+  </div>
+</app-modal>
