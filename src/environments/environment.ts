@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  base_api_url: 'https://34.241.217.201/users_ARF/',
+  base_api_url: 'http://34.241.217.201/users_ARF/',
 };
 
 /*
